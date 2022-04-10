@@ -24,3 +24,5 @@ url_380301_even_week = 'https://docs.google.com/document/pub?id=1_-7gYxCvTjzXBeT
 bot_token = "5019443966:AAFwaVKsv8sSzs85J0rtICuywAFno0EGzZY"
 
 admin_id = 477868775
+
+# Made some change

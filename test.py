@@ -49,15 +49,15 @@ with open("Data/dict_group.json", "r", encoding="utf-8") as file_r:
     dict_group = json.load(file_r)
 for key in dict_group:
     list_groups.append(key)
-if Data_work.get_parity_week() == "Четная":
+if Data_work.get_parity_week(data=Data_work.get_next_data()) == "Нечетная":
     for groups in list_groups:
-        with open(f"LocalDataLessons/{groups}_even.csv", "r", newline="", encoding="utf-8") as file_even:
+        with open(f"LocalDataLessons/{groups}_odd.csv", "r", newline="", encoding="utf-8") as file_even:
             even = csv.DictReader(file_even, delimiter="|")
             for row in even:
                 for i in range(8):
                     try:
                         if Data_work.get_convert_week(Data_work.get_now_data()) == row["0"]:
-                            if "Мочелевская" in row[f"{i}"]:
+                            if "Мисбахов" in row[f"{i}"]:
                                 list_schedule.append([row[f"{i - 1}"], row[f"{i}"]])
                     except KeyError:
                         break
