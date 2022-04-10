@@ -40,7 +40,7 @@ from datetime import datetime
 #                         l.append([row[f"{i-1}"], row[f"{i}"]])
 #             except KeyError:
 #                 break
-#     print(l)
+#     print(l) ef
 
 
 list_groups = list()
