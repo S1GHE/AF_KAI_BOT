@@ -1,2 +1,2 @@
 # AF_KAI_BOT
-Телеграмм бот для отправки и парсинга расписания 
+Schedule parsing bot
