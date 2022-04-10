@@ -36,6 +36,13 @@ def update_local_lessons():
             time.sleep(3600)
 
 
+# TODO ---------------------------------------- Auto Mail -------------------------------------------------------------
+
+async def periodic_auto_mail(sleep_for):
+    while True:
+        await asyncio.sleep(sleep_for)
+
+
 # TODO ------------------------------------------ Main ----------------------------------------------------------------
 
 if __name__ == "__main__":
