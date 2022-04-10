@@ -90,3 +90,7 @@ class DataBase:
             for key in dict_get_user:
                 if str(user_id) == key:
                     return dict_get_user[key][3]
+
+    @staticmethod
+    def get_chek_auto_mail():
+        user_auto_mail_on = list()

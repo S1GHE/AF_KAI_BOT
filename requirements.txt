@@ -1,0 +1,4 @@
+aiogram==2.19
+colorama==0.4.4
+pandas==1.4.2
+lxml==4.8.0
