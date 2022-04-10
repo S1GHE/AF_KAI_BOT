@@ -18,7 +18,6 @@ async def get_default_commands(dp):
             types.BotCommand("reg", "Регистрация"),
             types.BotCommand("les", "Расписание"),
             types.BotCommand("report", "Сообщить об ошибке"),
-            types.BotCommand("mail", "Включить/Выключить рассылку расписания"),
             types.BotCommand("week", "Четность/Нечетность недели")
         ]
     )
@@ -136,7 +135,9 @@ async def les_menu(message: types.Message, state: FSMContext):
             await message.answer("Выбирайте", reply_markup=KeyBoard.your_less_menu)
             await lessons.user_answer_your_les.set()
         elif message.text == "Расписание преподавателя":
-            pass
+            await message.answer("Находится в стадии доработки\n\n "
+                                 "P.s Примерное добавление в конце апреля")
+            return
         elif message.text == "Расписание по номеру группы":
             await message.answer("Введите номер академической группы")
             await lessons.user_answer_number_les.set()
@@ -189,7 +190,7 @@ async def your_les_menu(message: types.Message, state: FSMContext):
             list_les = Lessons.get_schedule_students(DataBase.get_check_numbers_user(message.from_user.id),
                                                      Data_work.get_next_data())
             if len(list_les) == 0:
-                await message.answer(f"Вы выбрали Завтра\n"
+                await message.answer(f"Вы выбрали: Завтра\n"
                                      f"Сейчас {Data_work.get_now_time()}\n\n"
                                      f"Выходной 🎉", parse_mode=types.ParseMode.HTML)
             else:
@@ -227,7 +228,7 @@ async def number_les2(message: types.Message, state: FSMContext):
         list_les = Lessons.get_schedule_students(number_groups['number_group'],
                                                  Data_work.get_back_data())
         if len(list_les) == 0:
-            await message.answer(f"Вы выбрали: Группу{number_groups['number_group']} Вчера\n"
+            await message.answer(f"Вы выбрали: Группу {number_groups['number_group']} Вчера\n"
                                  f"Сейчас {Data_work.get_now_time()} {Data_work.get_now_data()}\n\n"
                                  f"Выходной 🎉", parse_mode=types.ParseMode.HTML)
         else:
@@ -235,7 +236,7 @@ async def number_les2(message: types.Message, state: FSMContext):
             for i in range(len(list_les)):
                 result.append(" ".join(list_les[i]))
                 result[i] = str(result[i]) + '\n\n'
-            await message.answer(f"Вы выбрали: {number_groups['number_group']} Вчера\n"
+            await message.answer(f"Вы выбрали: Группу {number_groups['number_group']} Вчера\n"
                                  f"Сейчас {Data_work.get_now_time()} {Data_work.get_now_data()}\n\n"
                                  f"{''.join(result)}", parse_mode=types.ParseMode.HTML)
         return
@@ -259,7 +260,7 @@ async def number_les2(message: types.Message, state: FSMContext):
         list_les = Lessons.get_schedule_students(number_groups['number_group'],
                                                  Data_work.get_next_data())
         if len(list_les) == 0:
-            await message.answer(f"Вы выбрали:{number_groups['number_group']} Завтра\n"
+            await message.answer(f"Вы выбрали: Группу {number_groups['number_group']} Завтра\n"
                                  f"Сейчас {Data_work.get_now_time()}\n\n"
                                  f"Выходной 🎉", parse_mode=types.ParseMode.HTML)
         else:
@@ -267,7 +268,7 @@ async def number_les2(message: types.Message, state: FSMContext):
             for i in range(len(list_les)):
                 result.append(" ".join(list_les[i]))
                 result[i] = str(result[i]) + '\n\n'
-            await message.answer(f"Вы выбрали:{number_groups['number_group']} Завтра\n"
+            await message.answer(f"Вы выбрали: Группу {number_groups['number_group']} Завтра\n"
                                  f"Сейчас {Data_work.get_now_time()} {Data_work.get_now_data()}\n\n"
                                  f"{''.join(result)}", parse_mode=types.ParseMode.HTML)
         return
@@ -287,5 +288,12 @@ async def report_start(message: types.Message):
 @dp.message_handler(state=report.user_report)
 async def report_message(message: types.Message, state: FSMContext):
     await message.answer("Сообщение об ошибке было отправлено")
-    DataBase.set_user_report(message.from_user.id, message.text)
+    DataBase.set_user_report(message.from_user.id, message.text,
+                             f"{Data_work.get_now_data()} {Data_work.get_now_time()}")
     await state.finish()
+
+# Todo ------------------------------------ Week Branch --------------------------------------------------------------
+@dp.message_handler(Command("week"))
+async def week_command(message : types.Message):
+    if Data_work.get_parity_week(Data_work.get_now_data()) == "Четная":
+        await message.answer()

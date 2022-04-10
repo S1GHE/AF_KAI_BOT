@@ -57,7 +57,7 @@ class Lessons:
             with open(f"LocalDataLessons/{DataBase.get_check_group(num_groups)}_even.csv", "r", newline="",
                       encoding="utf-8") as file_even:
                 even_week = csv.DictReader(file_even, delimiter="|")
-                if num_groups.find("7", 2, 4) == 4:
+                if "7" in num_groups:
                     if num_groups.find("2", 2, 4) == 2:
                         for row in even_week:
                             if row["0"] == Data_work.get_convert_week(data):
@@ -92,7 +92,7 @@ class Lessons:
             with open(f"LocalDataLessons/{DataBase.get_check_group(num_groups)}_odd.csv", "r", newline="",
                       encoding="utf-8") as file_odd:
                 odd_week = csv.DictReader(file_odd, delimiter="|")
-                if num_groups.find("7", 2, 4) == 4:
+                if "7" in num_groups:
                     if num_groups.find("2", 2, 4) == 2:
                         for row in odd_week:
                             if row["0"] == Data_work.get_convert_week(data):

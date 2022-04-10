@@ -26,10 +26,10 @@ class DataBase:
             json.dump(dict_set_user_new, file_json_w, indent=4, ensure_ascii=False)
 
     @staticmethod
-    def set_user_report(user_id, user_message):
+    def set_user_report(user_id, user_message, data_report):
         with open("Data/report_user.csv", "a", encoding="utf-8", newline='') as file_csv:
             report = csv.writer(file_csv, delimiter="|", lineterminator="\r")
-            report.writerow([user_id, user_message])
+            report.writerow([user_id, user_message, data_report])
 
     # TODO ------------------------------------ Get Data Base --------------------------------------------------------
     @staticmethod
@@ -92,5 +92,15 @@ class DataBase:
                     return dict_get_user[key][3]
 
     @staticmethod
-    def get_chek_auto_mail():
-        user_auto_mail_on = list()
+    def get_all_id():
+        """
+        Получает все ID пользователей
+        :return:
+        """
+        user_id_list = list()
+        with open("Data/user_data.json", "r", encoding="utf-8") as file_r:
+            dict_get_all_id = json.load(file_r)
+            for key in dict_get_all_id:
+                user_id_list.append(key)
+
+        return user_id_list
